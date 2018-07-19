@@ -9,13 +9,13 @@
 
 <p>$ sudo tee /etc/yum.repos.d/docker.repo <<-'EOF'</p>
 <p>复制以下代码执行</p>
-<p>[dockerrepo]
-name=Docker Repository
-baseurl=https://yum.dockerproject.org/repo/main/centos/7/
-enabled=1
-gpgcheck=1
-gpgkey=https://yum.dockerproject.org/gpg
-EOF
+<p>[dockerrepo]</p>
+<p>name=Docker Repository</p>
+<p>baseurl=https://yum.dockerproject.org/repo/main/centos/7/</p>
+<p>enabled=1</p>
+<p>gpgcheck=1</p>
+<p>gpgkey=https://yum.dockerproject.org/gpg</p>
+<p>EOF</p>
 
 <p>3.安装Docker软件包</p>
 
