@@ -1,816 +1,542 @@
-<p>
-    <br/>
-</p>
-<p>
-    1、系统添加www用户
-</p>
-<p>
-    #useradd -s /sbin/nologin www
-</p>
-<p>
-    #groupadd www
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    2、安装前准备
-</p>
-<p>
-    #yum install epel-* -y
-</p>
-<p>
-    #yum install -y wget unzip gcc gcc-c++&nbsp; make zlib zlib-devel pcre pcre-devel&nbsp; libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers zip libzip php-mcrypt libmcrypt libmcrypt-devel autoconf libwebp libwebp-devel
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    #wget http://ftp.gnu.org/gnu/libiconv/libiconv-1.15.tar.gz
-</p>
-<p>
-    #tar zxf libiconv-1.14.tar.gz
-</p>
-<p>
-    #cd libiconv-1.14
-</p>
-<p>
-    #cd srclib/
-</p>
-<p>
-    #sed -i -e &#39;/gets is a security/d&#39; ./stdio.in.h
-</p>
-<p>
-    #cd ../
-</p>
-<p>
-    #./configure --prefix=/usr/local/libiconv
-</p>
-<p>
-    #make
-</p>
-<p>
-    #make install
-</p>
-<p>
-    #cd ..
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    安装Libmcrypt
-</p>
-<p>
-    #tar -zxvf libmcrypt-2.5.8.tar.gz
-</p>
-<p>
-    &nbsp; &nbsp;#cd libmcrypt-2.5.8
-</p>
-<p>
-    &nbsp; &nbsp;#./configure
-</p>
-<p>
-    &nbsp; &nbsp;#make
-</p>
-<p>
-    &nbsp; &nbsp;#make install 说明：libmcript默认安装在/usr/local
-</p>
-<p>
-    3.安装mhash
-</p>
-<p>
-    &nbsp; &nbsp;#tar -zxvf mhash-0.9.9.9.tar.gz
-</p>
-<p>
-    &nbsp; &nbsp;#cd mhash-0.9.9.9
-</p>
-<p>
-    &nbsp; &nbsp;#./configure
-</p>
-<p>
-    &nbsp; &nbsp;#make
-</p>
-<p>
-    &nbsp; &nbsp;#make install
-</p>
-<p>
-    4.安装mcrypt
-</p>
-<p>
-    &nbsp; &nbsp;#tar -zxvf mcrypt-2.6.8.tar.gz
-</p>
-<p>
-    &nbsp; &nbsp;#cd mcrypt-2.6.8
-</p>
-<p>
-    &nbsp; &nbsp;#LD_LIBRARY_PATH=/usr/local/lib ./configure
-</p>
-<p>
-    &nbsp; &nbsp;#make
-</p>
-<p>
-    &nbsp; &nbsp;#make install
-</p>
-<p>
-    &nbsp; &nbsp;说明：由于在配置Mcrypt时，会找不到libmcrypt的链接库，导致无法编译，因为Libmcrypt的链接库在/usr/local/文件夹下。因些在配置mcrypt时要加入LD_LIBRARY_PATH=/usr/local导入键接库
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    3安装PHP
-</p>
-<p>
-    #cd php-7.2.8
-</p>
-<p>
-    PHP7貌似已经取消了支持，编译都没有了--with-mysql参数，只支持--with-mysqli和--with-pdo-mysql，可以通过查看configure的参数来知道：
-</p>
-<p>
-    #./configure -help | grep mysql
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    ./configure \
-</p>
-<p>
-    --prefix=/data/apps/php \
-</p>
-<p>
-    --exec-prefix=/data/apps/php \
-</p>
-<p>
-    --bindir=/data/apps/php/bin \
-</p>
-<p>
-    --sbindir=/data/apps/php/sbin \
-</p>
-<p>
-    --includedir=/data/apps/php/include \
-</p>
-<p>
-    --libdir=/data/apps/php/lib/php \
-</p>
-<p>
-    --mandir=/data/apps/php/php/man \
-</p>
-<p>
-    --with-config-file-path=/data/apps/php/etc \
-</p>
-<p>
-    --with-mysql-sock=/var/lib/mysql/mysql.sock \
-</p>
-<p>
-    --with-mhash \
-</p>
-<p>
-    --with-openssl \
-</p>
-<p>
-    --with-mysqli=shared,mysqlnd \
-</p>
-<p>
-    --with-pdo-mysql=shared,mysqlnd \
-</p>
-<p>
-    --with-gd \
-</p>
-<p>
-    &nbsp;--with-iconv=/usr/local/libiconv\
-</p>
-<p>
-    --with-zlib \
-</p>
-<p>
-    --enable-zip \
-</p>
-<p>
-    --enable-inline-optimization \
-</p>
-<p>
-    --disable-debug \
-</p>
-<p>
-    --disable-rpath \
-</p>
-<p>
-    --enable-shared \
-</p>
-<p>
-    --enable-xml \
-</p>
-<p>
-    --enable-bcmath \
-</p>
-<p>
-    --enable-shmop \
-</p>
-<p>
-    --enable-sysvsem \
-</p>
-<p>
-    --enable-mbregex \
-</p>
-<p>
-    --enable-mbstring \
-</p>
-<p>
-    --enable-ftp \
-</p>
-<p>
-    --enable-pcntl \
-</p>
-<p>
-    --enable-sockets \
-</p>
-<p>
-    --with-xmlrpc \
-</p>
-<p>
-    --enable-soap \
-</p>
-<p>
-    --without-pear \
-</p>
-<p>
-    --with-gettext \
-</p>
-<p>
-    --enable-session \
-</p>
-<p>
-    --with-curl \
-</p>
-<p>
-    --with-jpeg-dir \
-</p>
-<p>
-    --with-png-dir \
-</p>
-<p>
-    --with-webp-dir \
-</p>
-<p>
-    --with-freetype-dir \
-</p>
-<p>
-    --enable-opcache \
-</p>
-<p>
-    --enable-fpm \
-</p>
-<p>
-    --with-fpm-user=www \
-</p>
-<p>
-    --with-fpm-group=www \
-</p>
-<p>
-    --without-gdbm \
-</p>
-<p>
-    --disable-fileinfo
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    下面这段是安装7.0遇到的问题，7.1没有遇到，7.2之后没有下面问题
-</p>
-<p>
-    In file included from /usr/local/packages/php-5.6.15/ext/zip/lib/zip_add.c:37:
-</p>
-<p>
-    /usr/local/packages/php-5.6.15/ext/zip/lib/zipint.h:118:2: error: #error unsupported size of off_t
-</p>
-<p>
-    make: *** [ext/zip/lib/zip_add.lo] Error 1
-</p>
-<p>
-    这个问题也很郁闷， 它是在make阶段出的问题（在configure阶段一切正常！）
-</p>
-<p>
-    主要是加了--enable-zip，去掉这个就不报错，但又必须得加上
-</p>
-<p>
-    我也是采用了比较迂回的策略，在configure的时候将--enable-zip 参数给去掉，
-</p>
-<p>
-    将zip作为php的扩展安装，作为扩展安装的时候没遇到问题
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/gd/libgd/gdkanji.c:349: undefined reference to `libiconv_open&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/gd/libgd/gdkanji.c:364: undefined reference to `libiconv&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/gd/libgd/gdkanji.c:380: undefined reference to `libiconv_close&#39;
-</p>
-<p>
-    ext/iconv/.libs/iconv.o: In function `php_iconv_stream_filter_dtor&#39;:
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:2558: undefined reference to `libiconv_close&#39;
-</p>
-<p>
-    ext/iconv/.libs/iconv.o: In function `php_iconv_stream_filter_ctor&#39;:
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:2579: undefined reference to `libiconv_open&#39;
-</p>
-<p>
-    ext/iconv/.libs/iconv.o: In function `_php_iconv_strlen&#39;:
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:747: undefined reference to `libiconv_open&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:771: undefined reference to `libiconv&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:805: undefined reference to `libiconv_close&#39;
-</p>
-<p>
-    ext/iconv/.libs/iconv.o: In function `_php_iconv_appendl&#39;:
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:470: undefined reference to `libiconv&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:504: undefined reference to `libiconv&#39;
-</p>
-<p>
-    ext/iconv/.libs/iconv.o: In function `_php_iconv_mime_decode&#39;:
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1497: undefined reference to `libiconv_open&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1990: undefined reference to `libiconv_close&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1993: undefined reference to `libiconv_close&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1608: undefined reference to `libiconv_close&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1611: undefined reference to `libiconv_open&#39;
-</p>
-<p>
-    ext/iconv/.libs/iconv.o: In function `_php_iconv_substr&#39;:
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:868: undefined reference to `libiconv_open&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:892: undefined reference to `libiconv&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:947: undefined reference to `libiconv_close&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:951: undefined reference to `libiconv_close&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:900: undefined reference to `libiconv_open&#39;
-</p>
-<p>
-    ext/iconv/.libs/iconv.o: In function `_php_iconv_mime_encode&#39;:
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1186: undefined reference to `libiconv_open&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1200: undefined reference to `libiconv_open&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1371: undefined reference to `libiconv&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1403: undefined reference to `libiconv&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1459: undefined reference to `libiconv_close&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1462: undefined reference to `libiconv_close&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1318: undefined reference to `libiconv&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1270: undefined reference to `libiconv&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1302: undefined reference to `libiconv&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1446: undefined reference to `libiconv&#39;
-</p>
-<p>
-    ext/iconv/.libs/iconv.o: In function `php_iconv_stream_filter_append_bucket&#39;:
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:2623: undefined reference to `libiconv&#39;
-</p>
-<p>
-    ext/iconv/.libs/iconv.o:/data/soft/php-7.2.8/ext/iconv/iconv.c:2696: more undefined references to `libiconv&#39; follow
-</p>
-<p>
-    ext/iconv/.libs/iconv.o: In function `php_iconv_string&#39;:
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:576: undefined reference to `libiconv_open&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:585: undefined reference to `libiconv&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:601: undefined reference to `libiconv&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:611: undefined reference to `libiconv_close&#39;
-</p>
-<p>
-    ext/iconv/.libs/iconv.o: In function `_php_iconv_strpos&#39;:
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:995: undefined reference to `libiconv_open&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1023: undefined reference to `libiconv&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/iconv/iconv.c:1137: undefined reference to `libiconv_close&#39;
-</p>
-<p>
-    ext/xmlrpc/libxmlrpc/.libs/encodings.o: In function `convert&#39;:
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/xmlrpc/libxmlrpc/encodings.c:65: undefined reference to `libiconv_open&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/xmlrpc/libxmlrpc/encodings.c:73: undefined reference to `libiconv&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/xmlrpc/libxmlrpc/encodings.c:93: undefined reference to `libiconv_close&#39;
-</p>
-<p>
-    /data/soft/php-7.2.8/ext/xmlrpc/libxmlrpc/encodings.c:93: undefined reference to `libiconv_close&#39;
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    解决方法
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    #make
-</p>
-<p>
-    #make install
-</p>
-<p>
-    #cp php.ini-production /data/apps/php/etc/php.ini
-</p>
-<p>
-    #cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
-</p>
-<p>
-    #cp sapi/fpm/php-fpm.conf /data/apps/php/etc/php-fpm.conf
-</p>
-<p>
-    #cp sapi/fpm/www.conf /data/apps/php/etc/php-fpm.d/www.conf
-</p>
-<p>
-    #cd ..
-</p>
-<p>
-    #sed -i &#39;s#short_open_tag = Off#short_open_tag = On#g&#39; /data/apps/php /etc/php.ini
-</p>
-<p>
-    #chmod +x /etc/init.d/php-fpm
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    /etc/init.d/php-fpm start|stop|restart
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    设置php-fpm.service
-</p>
-<p>
-    vim /usr/lib/systemd/system/php-fpm.service
-</p>
-<p>
-    [Unit]&nbsp;
-</p>
-<p>
-    Description=php-fpm&nbsp;
-</p>
-<p>
-    After=syslog.target network.target
-</p>
-<p>
-    [Service]&nbsp;
-</p>
-<p>
-    Type=forking&nbsp;
-</p>
-<p>
-    PIDFile=/var/run/php-fpm.pid&nbsp;
-</p>
-<p>
-    ExecStart=/data/apps/php/sbin/php-fpm&nbsp;
-</p>
-<p>
-    ExecReload=/bin/kill -USR2 MAINPIDExecStop=/bin/kill−INTMAINPIDExecStop=/bin/kill−INTMAINPID&nbsp;
-</p>
-<p>
-    PrivateTmp=true
-</p>
-<p>
-    [Install]&nbsp;
-</p>
-<p>
-    WantedBy=multi-user.targe
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    配置php-fpm.conf
-</p>
-<p>
-    php-fpm.conf是php-fpm进程服务的配置文件：
-</p>
-<p>
-    ######Pid file的默认前缀是/usr/local/php7/var
-</p>
-<p>
-    pid = /var/run/php-fpm.pid
-</p>
-<p>
-    error_log = /data/log/php-fpm/error.log
-</p>
-<p>
-    include=/data/apps/php/etc/php-fpm.d/*.conf
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    下载php7的phpredis扩展库
-</p>
-<p>
-    php官网下载redis扩展页面：http://pecl.php.net/package/redis
-</p>
-<p>
-    # wget http://pecl.php.net/get/redis-4.1.0.tgz
-</p>
-<p>
-    # tar -xzvf redis-4.1.0.tgz
-</p>
-<p>
-    # cd redis-4.1.0
-</p>
-<p>
-    # /data/apps/php/bin/phpize
-</p>
-<p>
-    # ./configure --with-php-config=/data/apps/php/bin/php-config
-</p>
-<p>
-    # make &amp;&amp; make install
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    1.<span style="white-space:pre">	</span>vim php.ini
-</p>
-<p>
-    2.<span style="white-space:pre">	</span>#文件尾增加下面代码
-</p>
-<p>
-    3.<span style="white-space:pre">	</span>extension=redis.so
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    Nginx
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    #cd nginx-1.13
-</p>
-<p>
-    #./configure --user=www --group=www --prefix=/data/apps/nginx --with-http_stub_status_module --with-http_ssl_module
-</p>
-<p>
-    #make &amp;&amp; make install
-</p>
-<p>
-    #cd ..
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    编辑文件：vim /usr/lib/systemd/system/nginx.service 添加下面的脚本，注意路径 ！
-</p>
-<p>
-    [Unit]
-</p>
-<p>
-    Description=nginx
-</p>
-<p>
-    Documentation=http://nginx.org/en/docs/
-</p>
-<p>
-    After=network.target remote-fs.target nss-lookup.target
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    [Service]
-</p>
-<p>
-    Type=forking
-</p>
-<p>
-    PIDFile=/data/apps/nginx/logs/nginx.pid
-</p>
-<p>
-    ExecStartPre=/data/apps//nginx/sbin/nginx -t -c /data/apps//nginx/conf/nginx.conf
-</p>
-<p>
-    ExecStart=/data/apps//nginx/sbin/nginx -c /data/apps//nginx/conf/nginx.conf
-</p>
-<p>
-    ExecReload=/bin/kill -s HUP $MAINPID
-</p>
-<p>
-    ExecStop=/bin/kill -s QUIT $MAINPID
-</p>
-<p>
-    PrivateTmp=true
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    [Install]
-</p>
-<p>
-    WantedBy=multi-user.target
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    systemctl is-enabled nginx.service #查询nginx是否开机启动
-</p>
-<p>
-    systemctl enable nginx.service #开机运行nginx
-</p>
-<p>
-    systemctl disable nginx.service #取消开机运行nginx
-</p>
-<p>
-    systemctl start nginx.service #启动nginx
-</p>
-<p>
-    systemctl stop nginx.service #停止nginx
-</p>
-<p>
-    systemctl restart nginx.service #重启nginx
-</p>
-<p>
-    systemctl reload nginx.service #重新加载nginx配置文件
-</p>
-<p>
-    systemctl status nginx.service #查询nginx运行状态
-</p>
-<p>
-    systemctl --failed #显示启动失败的服务
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    安装mysql
-</p>
-<p>
-    wget http://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm
-</p>
-<p>
-    # rpm -ivh mysql80-community-release-el7-1.noarch.rpm --force –nodeps
-</p>
-<p>
-    # yum install mysql-community-server
-</p>
-<p>
-    # systemctl enable mysqld.service 开机启动
-</p>
-<p>
-    # systemctl start mysqld.service
-</p>
-<p>
-    # grep &#39;temporary password&#39; /var/log/mysqld.log 查找初始密码
-</p>
-<p>
-    更改密码
-</p>
-<p>
-    ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;Kayson@398635&#39;;
-</p>
-<p>
-    创建用户
-</p>
-<p>
-    CREATE USER &#39;developer&#39;@&#39;%&#39; IDENTIFIED BY &#39;Kayson@398635&#39;;
-</p>
-<p>
-    授权
-</p>
-<p>
-    grant all privileges on *.* to &#39;root&#39;@&#39;127.0.0.1&#39;;
-</p>
-<p>
-    flush privileges;
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    grant all privileges on *.* to &#39;root&#39;@&#39;localhost&#39;;
-</p>
-<p>
-    flush privileges;
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    grant all privileges on *.* to &#39;root&#39;@’%’;
-</p>
-<p>
-    flush privileges;
-</p>
-<p>
-    <br/>
-</p>
-<p>
-    grant all privileges on *.* to &#39;developer&#39;@&#39;%&#39;;
-</p>
-<p>
-    flush privileges;
-</p>
-<p>
-    用法参考https://www.sohu.com/a/229885311_610509，增加了角色配置权限
-</p>
-<p>
-    解决客户端登陆不上的问题
-</p>
-<p>
-    ALTER USER &#39;developer&#39;@&#39;%&#39; IDENTIFIED BY &#39;Kayson@398635&#39; PASSWORD EXPIRE NEVER;
-</p>
-<p>
-    ALTER USER&nbsp; &#39;developer&#39;@&#39;%&#39;&nbsp; IDENTIFIED WITH mysql_native_password BY &#39;Kayson@398635&#39;;
-</p>
-<p>
-    FLUSH PRIVILEGES;
-</p>
-<p>
-    <br/>
-</p>
+
+1、系统添加www用户
+
+#useradd -s /sbin/nologin www
+
+#groupadd www
+
+
+
+2、安装前准备
+
+#yum install epel-* -y
+
+#yum install -y wget unzip gcc gcc-c++  make zlib zlib-devel pcre pcre-devel  libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers zip libzip php-mcrypt libmcrypt libmcrypt-devel autoconf libwebp libwebp-devel
+
+
+
+#wget http://ftp.gnu.org/gnu/libiconv/libiconv-1.15.tar.gz
+
+#tar zxf libiconv-1.14.tar.gz
+
+#cd libiconv-1.14
+
+#cd srclib/
+
+#sed -i -e '/gets is a security/d' ./stdio.in.h
+
+#cd ../
+
+#./configure --prefix=/usr/local/libiconv
+
+#make
+
+#make install
+
+#cd ..
+
+
+
+安装Libmcrypt
+
+#tar -zxvf libmcrypt-2.5.8.tar.gz
+
+   #cd libmcrypt-2.5.8
+
+   #./configure
+
+   #make
+
+   #make install 说明：libmcript默认安装在/usr/local
+
+3.安装mhash
+
+   #tar -zxvf mhash-0.9.9.9.tar.gz
+
+   #cd mhash-0.9.9.9
+
+   #./configure
+
+   #make
+
+   #make install
+
+4.安装mcrypt
+
+   #tar -zxvf mcrypt-2.6.8.tar.gz
+
+   #cd mcrypt-2.6.8
+
+   #LD_LIBRARY_PATH=/usr/local/lib ./configure
+
+   #make
+
+   #make install
+
+   说明：由于在配置Mcrypt时，会找不到libmcrypt的链接库，导致无法编译，因为Libmcrypt的链接库在/usr/local/文件夹下。因些在配置mcrypt时要加入LD_LIBRARY_PATH=/usr/local导入键接库
+
+
+
+
+
+3安装PHP
+
+#cd php-7.2.8
+
+PHP7貌似已经取消了支持，编译都没有了--with-mysql参数，只支持--with-mysqli和--with-pdo-mysql，可以通过查看configure的参数来知道：
+
+#./configure -help | grep mysql
+
+
+
+./configure \
+
+--prefix=/data/apps/php \
+
+--exec-prefix=/data/apps/php \
+
+--bindir=/data/apps/php/bin \
+
+--sbindir=/data/apps/php/sbin \
+
+--includedir=/data/apps/php/include \
+
+--libdir=/data/apps/php/lib/php \
+
+--mandir=/data/apps/php/php/man \
+
+--with-config-file-path=/data/apps/php/etc \
+
+--with-mysql-sock=/var/lib/mysql/mysql.sock \
+
+--with-mhash \
+
+--with-openssl \
+
+--with-mysqli=shared,mysqlnd \
+
+--with-pdo-mysql=shared,mysqlnd \
+
+--with-gd \
+
+ --with-iconv=/usr/local/libiconv\
+
+--with-zlib \
+
+--enable-zip \
+
+--enable-inline-optimization \
+
+--disable-debug \
+
+--disable-rpath \
+
+--enable-shared \
+
+--enable-xml \
+
+--enable-bcmath \
+
+--enable-shmop \
+
+--enable-sysvsem \
+
+--enable-mbregex \
+
+--enable-mbstring \
+
+--enable-ftp \
+
+--enable-pcntl \
+
+--enable-sockets \
+
+--with-xmlrpc \
+
+--enable-soap \
+
+--without-pear \
+
+--with-gettext \
+
+--enable-session \
+
+--with-curl \
+
+--with-jpeg-dir \
+
+--with-png-dir \
+
+--with-webp-dir \
+
+--with-freetype-dir \
+
+--enable-opcache \
+
+--enable-fpm \
+
+--with-fpm-user=www \
+
+--with-fpm-group=www \
+
+--without-gdbm \
+
+--disable-fileinfo
+
+
+
+下面这段是安装7.0遇到的问题，7.1没有遇到，7.2之后没有下面问题
+
+In file included from /usr/local/packages/php-5.6.15/ext/zip/lib/zip_add.c:37:
+
+/usr/local/packages/php-5.6.15/ext/zip/lib/zipint.h:118:2: error: #error unsupported size of off_t
+
+make: *** [ext/zip/lib/zip_add.lo] Error 1
+
+这个问题也很郁闷， 它是在make阶段出的问题（在configure阶段一切正常！）
+
+主要是加了--enable-zip，去掉这个就不报错，但又必须得加上
+
+我也是采用了比较迂回的策略，在configure的时候将--enable-zip 参数给去掉，
+
+将zip作为php的扩展安装，作为扩展安装的时候没遇到问题
+
+
+
+/data/soft/php-7.2.8/ext/gd/libgd/gdkanji.c:349: undefined reference to `libiconv_open'
+
+/data/soft/php-7.2.8/ext/gd/libgd/gdkanji.c:364: undefined reference to `libiconv'
+
+/data/soft/php-7.2.8/ext/gd/libgd/gdkanji.c:380: undefined reference to `libiconv_close'
+
+ext/iconv/.libs/iconv.o: In function `php_iconv_stream_filter_dtor':
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:2558: undefined reference to `libiconv_close'
+
+ext/iconv/.libs/iconv.o: In function `php_iconv_stream_filter_ctor':
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:2579: undefined reference to `libiconv_open'
+
+ext/iconv/.libs/iconv.o: In function `_php_iconv_strlen':
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:747: undefined reference to `libiconv_open'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:771: undefined reference to `libiconv'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:805: undefined reference to `libiconv_close'
+
+ext/iconv/.libs/iconv.o: In function `_php_iconv_appendl':
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:470: undefined reference to `libiconv'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:504: undefined reference to `libiconv'
+
+ext/iconv/.libs/iconv.o: In function `_php_iconv_mime_decode':
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1497: undefined reference to `libiconv_open'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1990: undefined reference to `libiconv_close'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1993: undefined reference to `libiconv_close'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1608: undefined reference to `libiconv_close'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1611: undefined reference to `libiconv_open'
+
+ext/iconv/.libs/iconv.o: In function `_php_iconv_substr':
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:868: undefined reference to `libiconv_open'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:892: undefined reference to `libiconv'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:947: undefined reference to `libiconv_close'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:951: undefined reference to `libiconv_close'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:900: undefined reference to `libiconv_open'
+
+ext/iconv/.libs/iconv.o: In function `_php_iconv_mime_encode':
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1186: undefined reference to `libiconv_open'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1200: undefined reference to `libiconv_open'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1371: undefined reference to `libiconv'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1403: undefined reference to `libiconv'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1459: undefined reference to `libiconv_close'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1462: undefined reference to `libiconv_close'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1318: undefined reference to `libiconv'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1270: undefined reference to `libiconv'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1302: undefined reference to `libiconv'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1446: undefined reference to `libiconv'
+
+ext/iconv/.libs/iconv.o: In function `php_iconv_stream_filter_append_bucket':
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:2623: undefined reference to `libiconv'
+
+ext/iconv/.libs/iconv.o:/data/soft/php-7.2.8/ext/iconv/iconv.c:2696: more undefined references to `libiconv' follow
+
+ext/iconv/.libs/iconv.o: In function `php_iconv_string':
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:576: undefined reference to `libiconv_open'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:585: undefined reference to `libiconv'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:601: undefined reference to `libiconv'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:611: undefined reference to `libiconv_close'
+
+ext/iconv/.libs/iconv.o: In function `_php_iconv_strpos':
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:995: undefined reference to `libiconv_open'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1023: undefined reference to `libiconv'
+
+/data/soft/php-7.2.8/ext/iconv/iconv.c:1137: undefined reference to `libiconv_close'
+
+ext/xmlrpc/libxmlrpc/.libs/encodings.o: In function `convert':
+
+/data/soft/php-7.2.8/ext/xmlrpc/libxmlrpc/encodings.c:65: undefined reference to `libiconv_open'
+
+/data/soft/php-7.2.8/ext/xmlrpc/libxmlrpc/encodings.c:73: undefined reference to `libiconv'
+
+/data/soft/php-7.2.8/ext/xmlrpc/libxmlrpc/encodings.c:93: undefined reference to `libiconv_close'
+
+/data/soft/php-7.2.8/ext/xmlrpc/libxmlrpc/encodings.c:93: undefined reference to `libiconv_close'
+
+
+
+解决方法
+
+
+
+#make
+
+#make install
+
+#cp php.ini-production /data/apps/php/etc/php.ini
+
+#cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+
+#cp sapi/fpm/php-fpm.conf /data/apps/php/etc/php-fpm.conf
+
+#cp sapi/fpm/www.conf /data/apps/php/etc/php-fpm.d/www.conf
+
+#cd ..
+
+#sed -i 's#short_open_tag = Off#short_open_tag = On#g' /data/apps/php /etc/php.ini
+
+#chmod +x /etc/init.d/php-fpm
+
+
+
+/etc/init.d/php-fpm start|stop|restart
+
+
+
+设置php-fpm.service
+
+vim /usr/lib/systemd/system/php-fpm.service
+
+[Unit] 
+
+Description=php-fpm 
+
+After=syslog.target network.target
+
+[Service] 
+
+Type=forking 
+
+PIDFile=/var/run/php-fpm.pid 
+
+ExecStart=/data/apps/php/sbin/php-fpm 
+
+ExecReload=/bin/kill -USR2 MAINPIDExecStop=/bin/kill−INTMAINPIDExecStop=/bin/kill−INTMAINPID 
+
+PrivateTmp=true
+
+[Install] 
+
+WantedBy=multi-user.targe
+
+
+
+配置php-fpm.conf
+
+php-fpm.conf是php-fpm进程服务的配置文件：
+
+######Pid file的默认前缀是/usr/local/php7/var
+
+pid = /var/run/php-fpm.pid
+
+error_log = /data/log/php-fpm/error.log
+
+include=/data/apps/php/etc/php-fpm.d/*.conf
+
+
+
+下载php7的phpredis扩展库
+
+php官网下载redis扩展页面：http://pecl.php.net/package/redis
+
+# wget http://pecl.php.net/get/redis-4.1.0.tgz
+
+# tar -xzvf redis-4.1.0.tgz
+
+# cd redis-4.1.0
+
+# /data/apps/php/bin/phpize
+
+# ./configure --with-php-config=/data/apps/php/bin/php-config
+
+# make && make install
+
+
+
+1.	vim php.ini
+
+2.	#文件尾增加下面代码
+
+3.	extension=redis.so
+
+
+
+
+
+Nginx
+
+
+
+#cd nginx-1.13
+
+#./configure --user=www --group=www --prefix=/data/apps/nginx --with-http_stub_status_module --with-http_ssl_module
+
+#make && make install
+
+#cd ..
+
+
+
+编辑文件：vim /usr/lib/systemd/system/nginx.service 添加下面的脚本，注意路径 ！
+
+[Unit]
+
+Description=nginx
+
+Documentation=http://nginx.org/en/docs/
+
+After=network.target remote-fs.target nss-lookup.target
+
+
+
+[Service]
+
+Type=forking
+
+PIDFile=/data/apps/nginx/logs/nginx.pid
+
+ExecStartPre=/data/apps//nginx/sbin/nginx -t -c /data/apps//nginx/conf/nginx.conf
+
+ExecStart=/data/apps//nginx/sbin/nginx -c /data/apps//nginx/conf/nginx.conf
+
+ExecReload=/bin/kill -s HUP $MAINPID
+
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+PrivateTmp=true
+
+
+
+[Install]
+
+WantedBy=multi-user.target
+
+
+
+systemctl is-enabled nginx.service #查询nginx是否开机启动
+
+systemctl enable nginx.service #开机运行nginx
+
+systemctl disable nginx.service #取消开机运行nginx
+
+systemctl start nginx.service #启动nginx
+
+systemctl stop nginx.service #停止nginx
+
+systemctl restart nginx.service #重启nginx
+
+systemctl reload nginx.service #重新加载nginx配置文件
+
+systemctl status nginx.service #查询nginx运行状态
+
+systemctl --failed #显示启动失败的服务
+
+
+
+
+
+安装mysql
+
+wget http://dev.mysql.com/get/mysql80-community-release-el7-1.noarch.rpm
+
+# rpm -ivh mysql80-community-release-el7-1.noarch.rpm --force –nodeps
+
+# yum install mysql-community-server
+
+# systemctl enable mysqld.service 开机启动
+
+# systemctl start mysqld.service
+
+# grep 'temporary password' /var/log/mysqld.log 查找初始密码
+
+更改密码
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'Kayson@398635';
+
+创建用户
+
+CREATE USER 'developer'@'%' IDENTIFIED BY 'Kayson@398635';
+
+授权
+
+grant all privileges on *.* to 'root'@'127.0.0.1';
+
+flush privileges;
+
+
+
+grant all privileges on *.* to 'root'@'localhost';
+
+flush privileges;
+
+
+
+grant all privileges on *.* to 'root'@’%’;
+
+flush privileges;
+
+
+
+grant all privileges on *.* to 'developer'@'%';
+
+flush privileges;
+
+用法参考https://www.sohu.com/a/229885311_610509，增加了角色配置权限
+
+解决客户端登陆不上的问题
+
+ALTER USER 'developer'@'%' IDENTIFIED BY 'Kayson@398635' PASSWORD EXPIRE NEVER;
+
+ALTER USER  'developer'@'%'  IDENTIFIED WITH mysql_native_password BY 'Kayson@398635';
+
+FLUSH PRIVILEGES;
+
+​
