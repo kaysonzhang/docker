@@ -28,7 +28,7 @@ libwebp libwebp-devel
 
 #cd ../
 
-#./configure --prefix=/usr/local/libiconv
+#./configure --prefix=/usr/local/libiconv #下面调用的时候注意写一下这个路径要不然会出错
 
 #make
 
@@ -198,121 +198,6 @@ make: *** [ext/zip/lib/zip_add.lo] Error 1
 我也是采用了比较迂回的策略，在configure的时候将--enable-zip 参数给去掉，
 
 将zip作为php的扩展安装，作为扩展安装的时候没遇到问题
-
-
-
-/data/soft/php-7.2.8/ext/gd/libgd/gdkanji.c:349: undefined reference to `libiconv_open'
-
-/data/soft/php-7.2.8/ext/gd/libgd/gdkanji.c:364: undefined reference to `libiconv'
-
-/data/soft/php-7.2.8/ext/gd/libgd/gdkanji.c:380: undefined reference to `libiconv_close'
-
-ext/iconv/.libs/iconv.o: In function `php_iconv_stream_filter_dtor':
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:2558: undefined reference to `libiconv_close'
-
-ext/iconv/.libs/iconv.o: In function `php_iconv_stream_filter_ctor':
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:2579: undefined reference to `libiconv_open'
-
-ext/iconv/.libs/iconv.o: In function `_php_iconv_strlen':
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:747: undefined reference to `libiconv_open'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:771: undefined reference to `libiconv'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:805: undefined reference to `libiconv_close'
-
-ext/iconv/.libs/iconv.o: In function `_php_iconv_appendl':
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:470: undefined reference to `libiconv'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:504: undefined reference to `libiconv'
-
-ext/iconv/.libs/iconv.o: In function `_php_iconv_mime_decode':
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1497: undefined reference to `libiconv_open'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1990: undefined reference to `libiconv_close'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1993: undefined reference to `libiconv_close'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1608: undefined reference to `libiconv_close'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1611: undefined reference to `libiconv_open'
-
-ext/iconv/.libs/iconv.o: In function `_php_iconv_substr':
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:868: undefined reference to `libiconv_open'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:892: undefined reference to `libiconv'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:947: undefined reference to `libiconv_close'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:951: undefined reference to `libiconv_close'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:900: undefined reference to `libiconv_open'
-
-ext/iconv/.libs/iconv.o: In function `_php_iconv_mime_encode':
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1186: undefined reference to `libiconv_open'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1200: undefined reference to `libiconv_open'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1371: undefined reference to `libiconv'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1403: undefined reference to `libiconv'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1459: undefined reference to `libiconv_close'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1462: undefined reference to `libiconv_close'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1318: undefined reference to `libiconv'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1270: undefined reference to `libiconv'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1302: undefined reference to `libiconv'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1446: undefined reference to `libiconv'
-
-ext/iconv/.libs/iconv.o: In function `php_iconv_stream_filter_append_bucket':
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:2623: undefined reference to `libiconv'
-
-ext/iconv/.libs/iconv.o:/data/soft/php-7.2.8/ext/iconv/iconv.c:2696: more undefined references to `libiconv' follow
-
-ext/iconv/.libs/iconv.o: In function `php_iconv_string':
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:576: undefined reference to `libiconv_open'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:585: undefined reference to `libiconv'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:601: undefined reference to `libiconv'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:611: undefined reference to `libiconv_close'
-
-ext/iconv/.libs/iconv.o: In function `_php_iconv_strpos':
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:995: undefined reference to `libiconv_open'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1023: undefined reference to `libiconv'
-
-/data/soft/php-7.2.8/ext/iconv/iconv.c:1137: undefined reference to `libiconv_close'
-
-ext/xmlrpc/libxmlrpc/.libs/encodings.o: In function `convert':
-
-/data/soft/php-7.2.8/ext/xmlrpc/libxmlrpc/encodings.c:65: undefined reference to `libiconv_open'
-
-/data/soft/php-7.2.8/ext/xmlrpc/libxmlrpc/encodings.c:73: undefined reference to `libiconv'
-
-/data/soft/php-7.2.8/ext/xmlrpc/libxmlrpc/encodings.c:93: undefined reference to `libiconv_close'
-
-/data/soft/php-7.2.8/ext/xmlrpc/libxmlrpc/encodings.c:93: undefined reference to `libiconv_close'
-
-
-
-解决方法
-
 
 
 #make
