@@ -1,19 +1,20 @@
+centos7安装php7.2.8+nginx1.15+mysql8.0
 
 1、系统添加www用户
-
 #useradd -s /sbin/nologin www
 
 #groupadd www
-
 
 
 2、安装前准备
 
 #yum install epel-* -y
 
-#yum install -y wget unzip gcc gcc-c++  make zlib zlib-devel pcre pcre-devel  libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel krb5 krb5-devel openssl openssl-devel openldap openldap-devel nss_ldap openldap-clients openldap-servers zip libzip php-mcrypt libmcrypt libmcrypt-devel autoconf libwebp libwebp-devel
-
-
+#yum install -y wget unzip gcc gcc-c++  make zlib zlib-devel pcre pcre-devel  libjpeg libjpeg-devel libpng 
+libpng-devel freetype freetype-devel libxml2 libxml2-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel 
+ncurses ncurses-devel curl curl-devel e2fsprogs e2fsprogs-devel openssl openssl-devel openldap 
+openldap-devel nss_ldap openldap-clients openldap-servers zip libzip php-mcrypt libmcrypt libmcrypt-devel autoconf 
+libwebp libwebp-devel
 
 #wget http://ftp.gnu.org/gnu/libiconv/libiconv-1.15.tar.gz
 
@@ -74,9 +75,6 @@
    #make install
 
    说明：由于在配置Mcrypt时，会找不到libmcrypt的链接库，导致无法编译，因为Libmcrypt的链接库在/usr/local/文件夹下。因些在配置mcrypt时要加入LD_LIBRARY_PATH=/usr/local导入键接库
-
-
-
 
 
 3安装PHP
