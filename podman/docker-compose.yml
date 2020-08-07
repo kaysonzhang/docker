@@ -1,0 +1,63 @@
+version: '3.2'
+services:
+    php-fpm:
+        build: ./php/
+        ports:
+            - "9000:9000"
+        links:
+            - mysql:mysql
+            - redis:redis
+        volumes:
+            - ../project/php:/data/www:rw
+            - ./php/php.ini:/usr/local/etc/php/php.ini:ro
+            - ./php/php-fpm.d:/usr/local/etc/php-fpm.d:ro
+            - ../logs/php-fpm:/var/log/php-fpm:rw
+            - ./php/sock:/var/run/sock # 挂载宿主机 socket 目录，因为 nginx 服务也需要访问
+        restart: always
+        command: php-fpm
+
+    nginx:
+        build: ./nginx
+        depends_on:
+            - php-fpm
+        links:
+            - php-fpm:php-fpm
+        volumes:
+            - ../project/php:/data/www:rw
+            - ./nginx/conf.d:/etc/nginx/conf.d:ro
+            - ./nginx/fastcgi.conf:/etc/nginx/fastcgi.conf:ro
+            - ./nginx/enable-php-tp5.conf:/etc/nginx/enable-php-tp5.conf:ro
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+            - ../logs/nginx:/var/log/nginx
+            - ./php/sock:/var/run/sock # nginx 服务也需要访问php sock
+        ports:
+            - "80:80"
+            - "8080:8080"
+            - "443:443"
+        restart: always
+        command: nginx -g 'daemon off;'
+
+    mysql:
+        build: ./mysql
+        ports:
+            - "3306:3306"
+        volumes:
+            - ../mysql:/var/lib/mysql:rw
+            - ../logs/mysql:/var/lib/mysql-logs:rw
+            - ./mysql/my.conf:/etc/mysql/my.conf:ro
+            - ./mysql/conf.d:/etc/mysql/conf.d:ro
+        environment:
+            MYSQL_ROOT_PASSWORD: 123456
+            #MYSQL_DATABASE: zphaldb
+            #MYSQL_USER: zphal
+            #MYSQL_PASSWORD: zphal123
+        restart: always
+        command: "--character-set-server=utf8"
+
+    redis:
+        build: ./redis
+        ports:
+            - "6379:6379"
+        volumes:
+            - ../redis:/data
+        restart: always
